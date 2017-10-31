@@ -1,0 +1,26 @@
+{
+  "name": "harmony-sender",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sanyabeast/harmony-sender.git"
+  },
+  "author": "Alex",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sanyabeast/harmony-sender/issues"
+  },
+  "homepage": "https://github.com/sanyabeast/harmony-sender#readme",
+  "dependencies" : {
+    "harmony" : "git://github.com/sanyabeast/harmony.git",
+    "sender" : "git://github.com/sanyabeast/sender.git",
+    "requirejs" : "latest",
+    "requirejs-text": "latest",
+    "superagent": "latest"
+  }
+}
