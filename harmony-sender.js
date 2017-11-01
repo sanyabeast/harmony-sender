@@ -61,7 +61,6 @@ define(["harmony", "file!sender.js", "file!superagent.js"], function(harmony, se
     Sender.prototype = {
         __onMessage : function(response){
             if (this.onResponse) this.onResponse(response);
-            // console.log(data);
         },
         request : function(options, data){
 
@@ -79,7 +78,6 @@ define(["harmony", "file!sender.js", "file!superagent.js"], function(harmony, se
             this._presets = presets;
             this.harmony.run("harmony-sender", function(presets){
                 self.sender.presets = presets;
-                console.log(self.sender.presets);
             }, presets);
 
         },
