@@ -43,11 +43,11 @@ define(["harmony", "file!sender.js", "file!superagent.js"], function(harmony, se
                             message : response.response.error.message,
                         } : null,
                         badRequest : response.response.badRequest
-                    } : null
+                    } : null,
+                    status : response.status
                 };
 
                 postResponse.extra = postResponse.request.extra;
-
                 postResponse.content = postResponse.body;
 
                 post(postResponse);
