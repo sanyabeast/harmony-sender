@@ -1,6 +1,56 @@
 "use strict";
 define(["harmony", "file!sender.js", "file!superagent.js"], function(harmony, senderSource, superagentSource){
 
+    var Template = function(tplString){
+        this.string = tplString;    
+    };
+
+    Template.fast = function(string, settings, getter){
+        var t = new Template(string);
+        return t.make(settings, getter);
+    };
+
+    Template.prototype = {
+        fast : Template.fast,
+        get string(){
+            return this._string;
+        },
+        set string(value){
+            this._string = value;
+            this.update();
+        },
+        update : function(){
+            var matches = this._string.match(/\{{[^${]*}}/g) || [];
+            var vars = [];
+
+            for (var a = 0, l = matches.length, name; a < l; a++){
+                name = matches[a].substring(2, matches[a].length - 2);
+                if (vars.indexOf(name) < 0) vars.push(name);
+            }
+
+            this._vars = vars;
+        },
+        make : function(settings, /*func*/getter){
+            var string = this._string;
+            var vars = this._vars;
+
+            if (getter){
+                for (var a = 0, l = vars.length; a < l; a++){
+                    string = string.replace(new RegExp("\\{{" + vars[a] + "}}", "g"), (getter(vars[a], settings)));
+                }
+
+            } else {
+                for (var a = 0, l = vars.length; a < l; a++){
+                    if (settings[vars[a]]) string = string.replace(new RegExp("\\{{" + vars[a] + "}}", "g"), (settings[vars[a]]));
+                }
+
+            }
+
+            
+            return string;
+        }
+    };
+
     var sender;
 
     var Sender = function(newInstance){
@@ -61,6 +111,11 @@ define(["harmony", "file!sender.js", "file!superagent.js"], function(harmony, se
     Sender.prototype = {
         __onMessage : function(response){
             if (this.onResponse) this.onResponse(response);
+        },
+        getURL : function(tpl, settings){
+            tpl = Template.fast(tpl, this.vars);
+            if (settings) tpl = Template.fast(tpl, settings);
+            return tpl;
         },
         request : function(options, data){
 
