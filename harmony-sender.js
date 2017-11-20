@@ -66,9 +66,7 @@ define(["harmony", "file!sender.js", "file!superagent.js"], function(harmony, se
         harmony.eval("harmony-sender", senderSource);
         harmony.run("harmony-sender", function(){
             self.sender.onResponse = function(response){
-                if (response.request.callback){
-                    delete response.request.callback;
-                }
+
 
                 var postResponse = {
                     body : response.body,
@@ -99,6 +97,12 @@ define(["harmony", "file!sender.js", "file!superagent.js"], function(harmony, se
 
                 postResponse.extra = postResponse.request.extra;
                 postResponse.content = postResponse.body;
+
+                if (response.request.callback){
+                    var callback = response.request.callback;
+                    delete response.request.callback;
+                    callback(postResponse);
+                }
 
                 post(postResponse);
             }
