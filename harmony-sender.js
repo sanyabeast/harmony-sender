@@ -156,6 +156,14 @@ define(["harmony", "file!sender.js", "file!superagent.js"], function(harmony, se
                 name : name,
                 value : value
             });
+        },
+        get commons(){
+            return this._commons;
+        },
+        set commons(data){
+            this.harmony.run("harmony-sender", function(data){
+                self.sender.commons = data;
+            }, data);
         }
     };
 
