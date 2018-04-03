@@ -1,5 +1,5 @@
 "use strict";
-define(["harmony", "file!sender.js", "file!superagent.js"], function(harmony, senderSource, superagentSource){
+define(["harmony", "file!sender.js", "file!superagent/superagent.js"], function(harmony, senderSource, superagentSource){
 
     var Template = function(tplString){
         this.string = tplString;    
